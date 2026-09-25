@@ -7,6 +7,6 @@ public class TicketService {
  public TicketService(TicketRepository repo){this.repo=repo;}
  public List<Ticket> all(){return repo.findAll();} public Ticket get(long id){return repo.findById(id).orElseThrow(()->new IllegalArgumentException("No ticket with id "+id));}
  public List<Ticket> search(String q){return repo.search(q==null?"":q);}
- public Ticket create(String name,String email,String category,String description){String token=UUID.randomUUID().toString(); Ticket t=repo.save(name,email,category,description,token); log.info("Created support ticket: {}",t); return t;}
+ public Ticket create(String name,String email,String category,String description){String token=UUID.randomUUID().toString(); Ticket t=repo.save(name,email,category,description,token); log.info("Created support ticket with id: {}", t.id()); return t;}
  public void changeStatus(long id,String status){repo.updateStatus(id,TicketStatus.valueOf(status));}
 }
