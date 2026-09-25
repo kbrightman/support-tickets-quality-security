@@ -7,6 +7,25 @@ public class TicketService {
  public TicketService(TicketRepository repo){this.repo=repo;}
  public List<Ticket> all(){return repo.findAll();} public Ticket get(long id){return repo.findById(id).orElseThrow(()->new IllegalArgumentException("No ticket with id "+id));}
  public List<Ticket> search(String q){return repo.search(q==null?"":q);}
- public Ticket create(String name,String email,String category,String description){String token=UUID.randomUUID().toString(); Ticket t=repo.save(name,email,category,description,token); log.info("Created support ticket with id: {}", t.id()); return t;}
- public void changeStatus(long id,String status){repo.updateStatus(id,TicketStatus.valueOf(status));}
+ public Ticket create(String name, String email, String category, String description) {
+
+	    if (name == null || name.isBlank()) {
+	        throw new IllegalArgumentException("Requester name is required");
+	    }
+
+	    if (email == null || email.isBlank()) {
+	        throw new IllegalArgumentException("Email is required");
+	    }
+
+	    if (description == null || description.isBlank()) {
+	        throw new IllegalArgumentException("Description is required");
+	    }
+
+	    String token = UUID.randomUUID().toString();
+	    Ticket t = repo.save(name, email, category, description, token);
+
+	    log.info("Created support ticket with id: {}", t.id());
+
+	    return t;
+	} public void changeStatus(long id,String status){repo.updateStatus(id,TicketStatus.valueOf(status));}
 }
