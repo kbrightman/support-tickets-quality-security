@@ -9,5 +9,9 @@ public class TicketController {
  @PostMapping("/tickets") public String create(@RequestParam String requesterName,@RequestParam String email,@RequestParam String category,@RequestParam String description){var t=service.create(requesterName,email,category,description);return "redirect:/tickets/"+t.id();}
  @GetMapping("/tickets/{id}") public String one(@PathVariable long id,Model m){m.addAttribute("ticket",service.get(id));return "ticket";}
  @PostMapping("/tickets/{id}/status") public String status(@PathVariable long id,@RequestParam String status){service.changeStatus(id,status);return "redirect:/tickets/"+id;}
- @ExceptionHandler(Exception.class) @ResponseBody public String error(Exception ex){return "Application error: "+ex+"\nCause: "+ex.getCause();}
-}
+ @ExceptionHandler(Exception.class)
+ @ResponseBody
+ public String error(Exception ex) {
+     return "An unexpected error occurred. Please try again later.";
+ }
+ }
