@@ -1,1 +1,16 @@
+# Maven build output
 /target/
+
+# Eclipse project files
+.classpath
+.project
+.settings/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Other build/temp files
+bin/
